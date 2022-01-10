@@ -2,6 +2,7 @@
 
 ## Java / Typescript
 
+### Agradecimentos ao Professor [Nélio Alves](https://devsuperior.com.br)
 
 [Guia de instalação das ferramentas](https://github.com/devsuperior/sds-dsmovie/tree/main/_instalacao)
 
@@ -56,38 +57,7 @@ IMPORTANTE: deletar subpasta .git
 
   - Botão direito no projeto -> Maven -> Update project (force update)
 
-### Passo: salvar primeira versão no Github
 
-[Playlist de introdução e configuração do Git/Github](https://www.youtube.com/watch?v=KLG-jC1fh28&list=PLNuUvBZGBA8nDTr8QRMgoT_l3XNt_BbWj)
-
-```bash
-git config --global user.name <seu nome>
-git config --global user.email <seu email>
-
-git init
-
-git add .
-
-git commit -m "Project created"
-
-git remote ...
-```
-
-```bash
-git status
-
-git remote -v
-
-git branch -M main
-
-git push -u origin main
-```
-
-### Passo: "limpar" o projeto ReactJS
-
-- Deletar arquivos não usados
-
-- **COMMIT: Project clean**
 
 ### Passo: adicionar Bootstrap e CSS ao projeto
 - Bootstrap

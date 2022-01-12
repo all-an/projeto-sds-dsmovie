@@ -6,7 +6,7 @@
 ![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
 
 # Projeto Spring / React ( Plataforma de Filmes )
-### Agradecimentos ao Professor [Nélio Alves](https://devsuperior.com.br)
+#### Agradecimentos ao Professor [Nélio Alves](https://devsuperior.com.br)
 
 ## Conhecimentos Reforçados neste Projeto :
 
@@ -564,8 +564,6 @@ INSERT INTO tb_score(movie_id, user_id, value) VALUES (2, 3, 4.0);
 
 #### Padrão camadas adotado
 
-![Image](https://github.com/devsuperior/bds-assets/raw/main/sds/padrao-camadas.png "Padrão camadas")
-
 <p align="center">
         <a href="https://www.linkedin.com/in/all-an/">
         <img align="center" " style="object-fit: cover"  src="/imgreadme/padrao-camadas.png" />
@@ -593,8 +591,12 @@ INSERT INTO tb_score(movie_id, user_id, value) VALUES (2, 3, 4.0);
 
 4) Recalcular a avaliação média do filme e salvar no banco de dados.
 
-![Image](https://raw.githubusercontent.com/devsuperior/bds-assets/main/sds/dsmovie-objs.png "Padrão camadas")
 
+<p align="center">
+        <a href="https://www.linkedin.com/in/all-an/">
+        <img align="center" " style="object-fit: cover"  src="/imgreadme/dsmovie-objs.png" />
+</a>
+</p>
 
 - **COMMIT: Save score**
 

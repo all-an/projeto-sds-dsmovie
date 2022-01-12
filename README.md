@@ -1,8 +1,26 @@
+![IDE](https://img.shields.io/badge/Eclipse-2C2255?style=for-the-badge&logo=eclipse&logoColor=white)
+![Java](https://img.shields.io/badge/Java-ED8B00?style=for-the-badge&logo=java&logoColor=white)
+![Spring](https://img.shields.io/badge/Spring_Boot-F2F4F9?style=for-the-badge&logo=spring-boot)
+![React](https://img.shields.io/badge/React-20232A?style=for-the-badge&logo=react&logoColor=61DAFB)
+![Typescript](https://img.shields.io/badge/TypeScript-007ACC?style=for-the-badge&logo=typescript&logoColor=white)
+![Bootstrap](https://img.shields.io/badge/Bootstrap-563D7C?style=for-the-badge&logo=bootstrap&logoColor=white)
+
 # Projeto Spring / React ( Plataforma de Filmes )
-
-## Java / Typescript
-
 ### Agradecimentos ao Professor [Nélio Alves](https://devsuperior.com.br)
+
+## Conhecimentos Reforçados neste Projeto :
+
+- Java
+- Spring Boot
+- JPA
+- H2 database
+- Postgres SQL
+- Security
+- Typescript
+- React
+- Web
+- Bootstrap
+
 
 [Guia de instalação das ferramentas](https://github.com/devsuperior/sds-dsmovie/tree/main/_instalacao)
 
@@ -14,13 +32,6 @@ yarn -v
 #### Design Figma
 
 https://www.figma.com/file/hpQuzpGHq2MmrI87xnfMoT/DSMovie1
-
-https://www.figma.com/file/svCMhNqgpAZuN86w9IHJ4v/DSMovie2
-
-https://www.figma.com/file/gEZYKqJJs2gEhIB6k9ksGB/DSMovie3
-
-https://www.figma.com/file/hyovBMIxwrn2Bb5MZLrxHL/DSMovie4
-
 
 ### Passo: criar projeto ReactJS
 
@@ -440,16 +451,207 @@ const movie = {
 
 - **COMMIT: Navigation buttons**
 
+### Passo: configuração de segurança
 
-## PARABÉNS!
+```java
+@Configuration
+@EnableWebSecurity
+public class SecurityConfig extends WebSecurityConfigurerAdapter {
 
-![Parabéns!](https://raw.githubusercontent.com/devsuperior/bds-assets/main/img/trophy.png)
+	@Autowired
+	private Environment env;
 
-- Quero muito saber seu feedback
-  - O que você está achando da nossa abordagem?
-  - Você está conseguindo acompanhar?
-  - O que você está achando do evento?
-- Participe
-  - Comente no Instagram e marque a gente @devsuperior.ig
-  - Divulgue seu projeto no Linkedin e marque a DevSuperior
+	@Override
+	protected void configure(HttpSecurity http) throws Exception {
+		if (Arrays.asList(env.getActiveProfiles()).contains("test")) {
+			http.headers().frameOptions().disable();
+		}
+		
+		http.cors().and().csrf().disable();
+		http.sessionManagement().sessionCreationPolicy(SessionCreationPolicy.STATELESS);
+		http.authorizeRequests().anyRequest().permitAll();
+	}
+
+	@Bean
+	CorsConfigurationSource corsConfigurationSource() {
+		CorsConfiguration configuration = new CorsConfiguration().applyPermitDefaultValues();
+		configuration.setAllowedMethods(Arrays.asList("POST", "GET", "PUT", "DELETE", "OPTIONS"));
+		final UrlBasedCorsConfigurationSource source = new UrlBasedCorsConfigurationSource();
+		source.registerCorsConfiguration("/**", configuration);
+		return source;
+	}
+}
+```
+- **COMMIT: Security config**
+
+### Passo: criar as entidades e o seed do banco
+
+#### Modelo conceitual
+![Image](https://raw.githubusercontent.com/devsuperior/bds-assets/main/sds/dsmovie-dominio.png "Modelo conceitual")
+
+#### application.properties
+```
+spring.profiles.active=test
+
+spring.jpa.open-in-view=false
+```
+
+#### application-test.properties
+```
+# Dados de conexão com o banco H2
+spring.datasource.url=jdbc:h2:mem:testdb
+spring.datasource.username=sa
+spring.datasource.password=
+
+# Configuração do cliente web do banco H2
+spring.h2.console.enabled=true
+spring.h2.console.path=/h2-console
+
+# Configuração para mostrar o SQL no console
+spring.jpa.show-sql=true
+spring.jpa.properties.hibernate.format_sql=true
+```
+
+#### import.sql
+```sql
+INSERT INTO tb_user(email) VALUES ('maria@gmail.com');
+INSERT INTO tb_user(email) VALUES ('joao@gmail.com');
+INSERT INTO tb_user(email) VALUES ('ana@gmail.com');
+INSERT INTO tb_user(email) VALUES ('lucia@gmail.com');
+INSERT INTO tb_user(email) VALUES ('joaquim@gmail.com');
+
+INSERT INTO tb_movie(score, count, title, image) VALUES (4.5, 2, 'The Witcher', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/jBJWaqoSCiARWtfV0GlqHrcdidd.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (3.3, 3, 'Venom: Tempo de Carnificina', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/vIgyYkXkg6NC2whRbYjBD7eb3Er.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Shang-Chi e a Lenda dos Dez Anéis', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/cinER0ESG0eJ49kXlExM0MEWĜW.jpg');
+INSERT INTO tb_movie(score, count, title, image) VALUES (0, 0, 'Matrix Resurrections', 'https://www.themoviedb.org/t/p/w533_and_h300_bestv2/hv7o3VgfsairBoQFAawgaQ4cR1m.jpg');
+
+INSERT INTO tb_score(movie_id, user_id, value) VALUES (1, 1, 5.0);
+INSERT INTO tb_score(movie_id, user_id, value) VALUES (1, 2, 4.0);
+INSERT INTO tb_score(movie_id, user_id, value) VALUES (2, 1, 3.0);
+INSERT INTO tb_score(movie_id, user_id, value) VALUES (2, 2, 3.0);
+INSERT INTO tb_score(movie_id, user_id, value) VALUES (2, 3, 4.0);
+```
+
+- **COMMIT: Domain model, database seed**
+
+### Passo: Busca de filmes
+
+#### Padrão camadas adotado
+
+![Image](https://github.com/devsuperior/bds-assets/raw/main/sds/padrao-camadas.png "Padrão camadas")
+
+- Criar repository
+- Criar DTO
+- Criar service
+- Criar controller
+- **COMMIT: Find movies**
+
+
+### Passo: Salvar avaliação
+
+#### Lógica:
+
+1) Informar email, id do filme e valor da avaliação (1 a 5).
+
+2) Recuperar usuário do banco de dados pelo email. Se o usuário não existir, insira no banco.
+
+3) Salvar a avaliação do usuário para o dado filme.
+
+4) Recalcular a avaliação média do filme e salvar no banco de dados.
+
+![Image](https://raw.githubusercontent.com/devsuperior/bds-assets/main/sds/dsmovie-objs.png "Padrão camadas")
+
+
+- **COMMIT: Save score**
+
+### Passo: Validação no Postgres local
+
+- Criar três perfis de projeto: test, dev, prod
+- Gerar script SQL no perfil dev
+- Testar projeto no banco Postgres local
+
+#### application-dev.properties
+```
+#spring.jpa.properties.javax.persistence.schema-generation.create-source=metadata
+#spring.jpa.properties.javax.persistence.schema-generation.scripts.action=create
+#spring.jpa.properties.javax.persistence.schema-generation.scripts.create-target=create.sql
+#spring.jpa.properties.hibernate.hbm2ddl.delimiter=;
+
+spring.datasource.url=jdbc:postgresql://localhost:5432/dsmovie
+spring.datasource.username=postgres
+spring.datasource.password=1234567
+
+spring.jpa.properties.hibernate.jdbc.lob.non_contextual_creation=true
+spring.jpa.hibernate.ddl-auto=none
+```
+
+#### application-prod.properties
+```
+spring.datasource.url=${DATABASE_URL}
+```
+
+#### system.properties
+```
+java.runtime.version=17
+```
+
+- **COMMIT: First homolog**
+
+### Passo: Implantação no Heroku
+- Criar app no Heroku
+- Provisionar banco Postgres
+- Definir variável APP_PROFILE=prod
+- Conectar ao banco via pgAdmin
+- Criar seed do banco
+
+```bash
+heroku -v
+heroku login
+heroku git:remote -a <nome-do-app>
+git remote -v
+git subtree push --prefix backend heroku main
+```
+
+
+### Passo: implantação no Netlify
+- Deploy básico
+  - Base directory: frontend
+  - Build command: yarn build
+  - Publish directory: frontend/build
+
+- Arquivo _redirects
+```
+/* /index.html 200
+```
+
+- Configurações adicionais
+  - Site settings -> Domain Management: (colocar o nome que você quiser)
+  - Deploys -> Trigger deploy
+
 

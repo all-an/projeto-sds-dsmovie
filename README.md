@@ -566,13 +566,21 @@ INSERT INTO tb_score(movie_id, user_id, value) VALUES (2, 3, 4.0);
 
 ![Image](https://github.com/devsuperior/bds-assets/raw/main/sds/padrao-camadas.png "Padrão camadas")
 
+<p align="center">
+        <a href="https://www.linkedin.com/in/all-an/">
+        <img align="center" " style="object-fit: cover"  src="/imgreadme/padrao-camadas.png" />
+</a>
+</p>
+
 - Criar repository
 - Criar DTO
 - Criar service
 - Criar controller
 - **COMMIT: Find movies**
 
-
+```bash
+/movies?size=12&page=1
+```
 ### Passo: Salvar avaliação
 
 #### Lógica:

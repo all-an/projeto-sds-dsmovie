@@ -631,6 +631,33 @@ java.runtime.version=17
 - Conectar ao banco via pgAdmin
 - Criar seed do banco
 
+understanding heroku url
+
+sample:
+
+postgres://cumsgldwwauabt:3448a4b82a0a443568bf55d60e2cbfe95d610d760338ace0a8e5505b6e1e1450@ec2-54-152-185-191.compute-1.amazonaws.com:5432/d4h2kv7tja69lc
+
+postgres://
+
+cumsgldwwauabt
+
+:
+
+3448a4b82a0a443568bf55d60e2cbfe95d610d760338ace0a8e5505b6e1e1450
+
+@
+
+ec2-54-152-185-191.compute-1.amazonaws.com  <<<<<<< host name address
+
+:
+
+5432   <<<<<<< port
+
+/
+
+d4h2kv7tja69lc   <<<<<<< maintenance database name
+
+
 ```bash
 heroku -v
 heroku login

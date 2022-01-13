@@ -35,18 +35,9 @@ https://www.figma.com/file/hpQuzpGHq2MmrI87xnfMoT/DSMovie1
 
 ### Passo: criar projeto ReactJS
 
-- ATENÇÃO: esta será a estrutura de pastas que vamos criar:
-
-![DevSuperior no Instagram](https://raw.githubusercontent.com/devsuperior/bds-assets/main/sds/pastas-dsmovie.png)
-
-
 ```
 yarn create react-app frontend --template typescript
 ```
-
-IMPORTANTE: deletar subpasta .git
-- *Lembrete: ver extensões e arquivos ocultos*
-
 ### Passo: criar projeto Spring Boot
 
 - Criar projeto Spring Boot no `Spring Initializr` com as seguintes dependências:

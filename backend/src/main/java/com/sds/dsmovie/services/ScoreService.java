@@ -23,7 +23,7 @@ public class ScoreService {
 	private UserRepository userRepository;
 	
 	@Autowired
-	private ScoreRepository scoreRepository;
+	private ScoreRepository scoreRepository; 
 	
 	@Transactional
 	public MovieDTO saveScore(ScoreDTO dto) {

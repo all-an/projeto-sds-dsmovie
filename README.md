@@ -7,15 +7,9 @@
 
 >____
 
-![Deploy do Front-End no Netlify](https://all-an-projeto-dsmovie.netlify.app/)
+[Deploy do Front-End no Netlify](https://all-an-projeto-dsmovie.netlify.app/)
 
-![Deploy do Back-End no Heroku](https://allan-dsmovie.herokuapp.com/)
-
-### endpoints para acesso com o Postman
-
-```bash
-/movies 
-```
+[Deploy do Back-End no Heroku](https://allan-dsmovie.herokuapp.com/)
 
 # Projeto Spring / React ( Plataforma de Filmes )
 #### Agradecimentos ao Professor [Nélio Alves](https://devsuperior.com.br)
@@ -581,6 +575,11 @@ INSERT INTO tb_score(movie_id, user_id, value) VALUES (2, 3, 4.0);
 
 ```bash
 /movies?size=12&page=1
+```
+### endpoint
+
+```bash
+/movies 
 ```
 ### Passo: Salvar avaliação
 
